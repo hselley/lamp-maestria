@@ -1,0 +1,183 @@
+
+/* ====== Tabla HTML sin clases/ID ====== */
+:root {
+  --bg: #0f141b;
+  --surface: #1b2430;
+  --surface-2: #222c3a;
+  --text: #e9eef6;
+  --muted: #b6c2d2;
+  --primary: #4cc9f0;
+  --accent: #ff7b72;
+
+  --border: rgba(255,255,255,0.08);
+  --shadow: 0 8px 20px rgba(0,0,0,0.25);
+  --radius: 14px;
+  --radius-sm: 10px;
+
+  --font: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+/* Modo claro automático */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f7f9fc;
+    --surface: #ffffff;
+    --surface-2: #f2f5f9;
+    --text: #0f141b;
+    --muted: #5a6b81;
+    --primary: #0ea5e9;
+    --accent: #ef4444;
+
+    --border: rgba(0,0,0,0.1);
+    --shadow: 0 8px 20px rgba(0,0,0,0.08);
+  }
+}
+
+/* Contenedor general (si la tabla está suelta en el body) */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  padding: 24px;
+}
+
+/* Estilos base de tabla */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+/* Caption (título de la tabla) */
+caption {
+  caption-side: top;
+  padding: 16px 18px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: left;
+}
+
+/* Encabezados sticky */
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, var(--surface) 100%);
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-align: left;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: saturate(1.05) blur(6px);
+}
+
+/* Celdas del cuerpo */
+tbody td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+  color: var(--text);
+}
+
+/* Bordes y radios en extremos (primer/última celda de cada fila) */
+tbody tr:first-child td:first-child { border-top-left-radius: var(--radius); }
+tbody tr:first-child td:last-child  { border-top-right-radius: var(--radius); }
+tbody tr:last-child td:first-child  { border-bottom-left-radius: var(--radius); }
+tbody tr:last-child td:last-child   { border-bottom-right-radius: var(--radius); }
+
+/* Zebra + hover (sin clases) */
+tbody tr:nth-child(odd) td {
+  background: rgba(255,255,255,0.03);
+}
+tbody tr:nth-child(even) td {
+  background: rgba(255,255,255,0.06);
+}
+tbody tr:hover td {
+  background: rgba(76, 201, 240, 0.12); /* var(--primary) con transparencia */
+  transition: background 140ms ease;
+}
+
+/* Primera columna destacada (sin clases) */
+tbody td:first-child {
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Columnas estrechas por posición (ajústalo según tu tabla) */
+thead th:nth-child(1),
+tbody td:nth-child(1) { white-space: nowrap; width: 1%; }
+thead th:nth-child(3),
+tbody td:nth-child(3) { white-space: nowrap; width: 1%; }
+
+/* Indicador visual de “ordenable” (solo apariencia) */
+thead th {
+  cursor: default;
+  user-select: none;
+}
+thead th::after {
+  content: " ⇅";
+  color: var(--muted);
+  font-weight: 400;
+  opacity: 0.7;
+  margin-left: 4px;
+}
+
+/* Texto especial para números/precios si usas <small> adentro */
+td small {
+  color: var(--muted);
+  margin-left: 6px;
+}
+
+/* Precios bonitos si el contenido es solo texto (sin clases) */
+td[data-type="price"],
+td.price,
+td:nth-child(4) /* si tu 4ta col. es precio */ {
+  font-family: var(--mono);
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--accent), var(--primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Barra superior opcional si pones <caption> */
+caption::after {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-top: 12px;
+  background: var(--border);
+}
+
+/* Responsive básico (sin clases): convierte filas en tarjetas en móviles */
+@media (max-width: 720px) {
+  thead { display: none; }
+  table, tbody, tr, td { display: block; width: 100%; }
+  tbody tr {
+    margin: 12px 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow);
+    background: var(--surface);
+    overflow: hidden;
+  }
+  tbody td {
+    border: 0;
+    padding: 12px 14px;
+  }
+  /* Etiquetas de columna: usa el atributo data-label en tu HTML para móviles */
+  tbody td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+}
