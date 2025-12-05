@@ -19,7 +19,7 @@
     <div class="container">
         <form action="confirmacion.php" method="POST">
             <div class="mb-3 mt-3">
-                <label for="nombre" class="form-label">Email:</label>
+                <label for="nombre" class="form-label">Nombre:</label>
                 <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre" name="nombre">
             </div>
             <div class="mb-3 mt-3">
@@ -27,8 +27,8 @@
                 <input type="email" class="form-control" id="email" placeholder="Ingrese correo email" name="email">
             </div>
             <div class="mb-3 mt-3">
-                <label for="age" class="form-label">Email:</label>
-                <input type="number" class="form-control" id="age" placeholder="Ingrese su edad" name="age">
+                <label for="age" class="form-label">Edad:</label>
+                <input type="number" class="form-control" id="age" placeholder="Ingrese su edad" name="age" min='0' step='1'>
             </div>
             <button type="submit" class="btn btn-primary">Registro</button>
         </form>
